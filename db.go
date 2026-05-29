@@ -9,24 +9,21 @@ import (
 
 var db *sql.DB
 
-// initDB はデータベースの初期化と接続を行います
 func initDB() {
 	var err error
-	// order.db ファイルを開く（存在しない場合は自動作成されます）
 	db, err = sql.Open("sqlite3", "order.db")
 	if err != nil {
 		log.Fatalf("データベースのオープンに失敗しました: %v", err)
 	}
 
-	// SQLiteの同時書き込み（ロック競合）対策として最大接続数を1に制限
+	// SQLiteの同時書き込み対策
 	db.SetMaxOpenConns(1)
 
-	// 接続確認
 	if err = db.Ping(); err != nil {
 		log.Fatalf("データベースへの接続確認に失敗しました: %v", err)
 	}
 
-	// order_items テーブルが存在しない場合は自動作成するSQL
+	// テーブル自動作成
 	createTableSQL := `
 	CREATE TABLE IF NOT EXISTS order_items (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
