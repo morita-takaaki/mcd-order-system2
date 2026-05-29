@@ -1,5 +1,5 @@
 module mcd-order-system
 
-go 1.26.1
+go 1.25
 
-require github.com/mattn/go-sqlite3 v1.14.44 // indirect
+require github.com/mattn/go-sqlite3 v1.14.22
